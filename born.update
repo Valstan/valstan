@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-wget -r -np -N -nH --cut-dirs=1 -P ~/born ftp://id45d_valstan:metro2000@id45d.myjino.ru/born/
-echo "Обновил скрипты BORN"
-exit
