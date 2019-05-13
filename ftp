@@ -1,0 +1,11 @@
+# подключаемся к ftp и логируем подключение
+ftp -n -v $FTPHOST <<INPUT_END > born.log
+user $FTPUSER $FTPPASS
+pasv
+binary
+promt
+cd $REMOTEDIR
+dir
+wget -nc *
+INPUT_END
+quit

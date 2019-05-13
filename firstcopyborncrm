@@ -1,0 +1,1 @@
+wget -r -np -nH -P ~ ftp://id45d_valstan:metro2000@id45d.myjino.ru

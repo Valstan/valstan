@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+NAMESCRIPT="Скрипт обслуживания сервера CRM от Valstan v.0.1"
+
+# Проверяем параметры запуска скрипта для автомата
+if [ "$1" == "deploy" ]; then
+    apt update
+    apt upgrade -y
+# Ставим утилиты для себя и для Ноды
+    apt install -y nano mc build-essential libssl-dev curl
+
+# Ставим NVM
+    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+    export NVM_DIR="${XDG_CONFIG_HOME/:-$HOME/.}nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Ставим Ноду
+    nvm install --lts
+    nvm use
+
+# Ставим PM2
+    npm install pm2@4.17.4 -g
+    
+# Ставим МОНГО
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+    echo "deb http://repo.mongodb.org/apt/debian stretch/mongodb-org/4.0 main" | tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+    apt update
+    apt install -y mongodb-org
+
+# Заливаем и распаковываем Фортуналог
+    wget -P /home/ ftp://id45d_valstan:metro2000@id45d.myjino.ru/crm.zip
+    cd /home
+    tar -xf crm.zip
+    
+
+# скрипт автоматической настройки сертификата letsencript
+    wget -O -  https://get.acme.sh | sh
+
+# ручная установка letsencript
+#    apt install -y certbot -t stretch-backports
+#    certbot certonly
+#    Остановить веб-сервер
+#    далее замени example    
+#    certbot certonly --webroot -w /var/www/example -d example.com -d www.example.com -w /var/www/thing -d thing.is -d m.thing.is
+#    запусти вебсервер
+
+#    curl -sL https://deb.nodesource.com/setup_10.x | bash -
+#    apt update -y
+#    apt install -y nodejs
+    
+    echo "Сервер настроен"
+elif [ "$1" == "zalivka" ]; then
+    wget -r -np -nH -N -P ~ ftp://id45d_valstan:metro2000@id45d.myjino.ru
+else echo "$NAMESCRIPT"
+    echo "Внимание! Первый запуск на голый сервер должен быть от имени root с параметром deploy (см.ниже)"
+    echo "В остальных случаях запускать этот скрипт от имени пользователя - sudo ./start parametr"
+    echo "Параметры автоматической работы скрипта:"
+    echo "deploy - настройка сервера Debian, создание пользователя valstan, установка утилит sudo, nano, mc, nodejs, build-essential"
+    echo "zalivka - заливка/обновление CRM и START"
+    echo "zalivka - утилит"
+    echo "zalivka - утилит"
+    echo "zalivka - утилит"
+    echo "zalivka - утилит"
+fi
+exit
