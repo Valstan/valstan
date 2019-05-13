@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+source ./valstan.cfg
     apt update
     apt upgrade -y
 # Ставим утилиты для себя и для Ноды
-    apt install -y nano mc build-essential libssl-dev curl
+    apt install -y nano mc build-essential libssl-dev
 
 # Ставим NVM
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
@@ -23,17 +24,17 @@
     apt install -y mongodb-org
 
 # Заливаем и распаковываем Фортуналог
-    wget -P /home/ ftp://id45d_valstan:metro2000@id45d.myjino.ru/crm.zip
-    cd /home
+    wget -P $crmdir/ ftp://$ftplogin:$ftppass@$ftpadres/crm.zip
+    cd $crmdir
     tar -xf crm.zip
 
 # Устанавливаем модули сервера
-    npm install /home/crm/modulinstall.sh
+    npm install $crmdir/crm/modulinstall.sh
 
 # Запускаем сервер
-    pm2 start /home/crm/index.js
+    pm2 start $crmdir/crm/index.js
     sleep 20s
-    pm2 stop # я не понял пока нужны ли тут аргументы, нужно остановить вебсервер
+    pm2 stop 0 # нужно остановить сервер,скорей всего он висит на процессе 0 в pm2
 
 # скрипт автоматической настройки сертификата letsencript (еще не пробовал, возможно тут чтото надо будет вводить руками ответы на вопросы, если что есть ниже вариант автоматический)
     wget -O -  https://get.acme.sh | sh
