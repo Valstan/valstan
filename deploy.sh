@@ -3,19 +3,19 @@ source ./valstan.cfg
     apt update
     apt upgrade -y
 # Ставим утилиты для себя и для Ноды
-    apt install -y nano mc build-essential libssl-dev
+    apt install -y $utilites
 
 # Ставим NVM
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
     export NVM_DIR="${XDG_CONFIG_HOME/:-$HOME/.}nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # Ставим Ноду
     nvm install --lts
     nvm use
 
 # Ставим PM2
-    npm install pm2@4.17.4 -g
+    npm install $pm2
     
 # Ставим МОНГО
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
@@ -23,16 +23,20 @@ source ./valstan.cfg
     apt update
     apt install -y mongodb-org
 
-# Заливаем и распаковываем Фортуналог
-    wget -P $crmdir/ ftp://$ftplogin:$ftppass@$ftpadres/crm.zip
-    cd $crmdir
-    tar -xf crm.zip
+# Заливаем Фортуналог через Git
+    cd $vebserver
+    git clone $gitfortuna
+
+# Заливаем и распаковываем Фортуналог через FTP
+#    wget -P $crmdir/ ftp://$ftplogin:$ftppass@$ftpadres/crm.zip
+#    cd $crmdir
+#    tar -xf crm.zip
 
 # Устанавливаем модули сервера
-    npm install $crmdir/crm/modulinstall.sh
+    npm install $webserver$fortuna/modulinstall.sh
 
 # Запускаем сервер
-    pm2 start $crmdir/crm/index.js
+    pm2 start $webserver$fortuna/index.js
     sleep 20s
     pm2 stop 0 # нужно остановить сервер,скорей всего он висит на процессе 0 в pm2
 
