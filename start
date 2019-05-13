@@ -27,8 +27,8 @@ if [ "$1" == "deploy" ]; then
     apt install -y mongodb-org
 
 # Заливаем и распаковываем Фортуналог
-    wget -P /home/ ftp://id45d_valstan:metro2000@id45d.myjino.ru/crm.zip
-    cd /home
+    wget -P $crmdir/ ftp://$ftplogin:$ftppass@$ftpadres/crm.zip
+    cd $crmdir
     tar -xf crm.zip
     
 
@@ -49,7 +49,7 @@ if [ "$1" == "deploy" ]; then
     
     echo "Сервер настроен"
 elif [ "$1" == "zalivka" ]; then
-    wget -r -np -nH -N -P ~ ftp://id45d_valstan:metro2000@id45d.myjino.ru
+    wget -r -np -nH -N -P $crmdir ftp://$ftplogin:$ftppass@$ftpadres
 else echo "$NAMESCRIPT"
     echo "Внимание! Первый запуск на голый сервер должен быть от имени root с параметром deploy (см.ниже)"
     echo "В остальных случаях запускать этот скрипт от имени пользователя - sudo ./start parametr"
