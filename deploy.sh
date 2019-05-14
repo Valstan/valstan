@@ -9,7 +9,7 @@ fi
 
 # Присваиваем переменым значения
 NoDeVeRSioN="setup_10.x"
-uTiLiTeS="nano mc build-essential libssl-dev git cron socat curl libcurl3 openssl dirmngr"
+uTiLiTeS="nano mc build-essential libssl-dev cron socat curl libcurl3 openssl dirmngr"
 
 # Утилиты
 apt update
