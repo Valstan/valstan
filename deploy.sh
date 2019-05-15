@@ -2,7 +2,7 @@
 
 # Проверяем введены ли аргументы
 if (( $# < 3 )); then
-echo "!ОШИБКА! Введен мало аргументов! Пример запуска скрипта:"
+echo "!ОШИБКА! Введено мало аргументов! Пример запуска скрипта:"
 echo "./deploy ftp://ftplogin:ftpassword@ftpaddress.com/dir zipfile.zip /var/www/webserver"
 exit
 fi
