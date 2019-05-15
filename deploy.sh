@@ -47,5 +47,6 @@ cd
 wget -O -  https://get.acme.sh | sh
 
 # Запускаем сервер
+cd $3
 pm2 startup index.js
 pm2 save
