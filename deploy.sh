@@ -2,7 +2,6 @@
 
 [ $# -eq 0 ] && echo "Используйте: $0 argument"; exit;
 
-# Проверка 15
 cd ~
 utilites="unzip nano mc build-essential libssl-dev cron socat curl libcurl3 openssl dirmngr"
 download="crm.zip"
